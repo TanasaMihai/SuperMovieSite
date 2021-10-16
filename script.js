@@ -1,33 +1,37 @@
-//TVMAZE API KEY: kHbRZbHSw1fCuDZb-fFVtmBaTpNLM5mq
+function searchMovies() {
 
-function searchMovies(){
-//  define  a constant/object to acces http/url site  //
+var inputMovies = document.getElementById("inputMovies").value;
+var endpoint = "https://api.tvmaze.com/search/shows";            
+var reqEndpointTvMaze = endpoint + "?q=" + inputMovies;      
 
-const xhr = new XMLHttpRequest();
+               
+var xhr = new XMLHttpRequest();
+xhr.onreadystatechange = function() {
+if (this.readyState == 4 && this.status == 200) {
+output = JSON.parse(this.responseText);
 
-xhr.onload = function() {  //you can use this 2 lines or //xhr.addEventListener("load", function () {}); // this a call back function will get call when data is arrived
- const movieInfo = JSON.parse(xhr.responseText);// sort data from json we need to convert to an object
+var number_tv = output.length;
+for (var i = 0; i < number_tv; i++) {
 
+console.log(output[i]);      
 
- //console.log(movieInfo);// response will be json text
-} 
-//  abreviation 'xhr' stand for = xml http request  //
+var name = output[i]['show']['name'];
+var url = output[i]['show']['url'];   
 
-const url = "https://api.tvmaze.com/search/shows?q=girls&appid=kHbRZbHSw1fCuDZb-fFVtmBaTpNLM5mq"
+var output_html  = "<div class = 'displayMovies'>"  + ">" + name + ">" + url +  "</div><br><br><br>";
 
-// in order to send a request you need cmd 'open' to innitialise the request
-// and pas the 2 parrameters "GET"and "url" (open xhr).
+var currentHTML = document.getElementById("responseSearch").innerHTML;
+output_html = currentHTML + output_html;
 
-xhr.open("GET", url);
- 
-// After we open the 'xhr' we, Now, send the 'xhr'
-//SEND request to the remote server.
-// in our case we send nothing (); because we do a GET request
+document.getElementById("responseSearch").innerHTML = output_html;
 
-xhr.send(); // we dont get the result  imediatly because  XMLHttpReques works  assyncronisly for verify that see ligne 8
-}
-window.onload = function(){
-document.getElementById("btn").onclick = function(){
-   searchMovies();
 }
 }
+}; 
+
+xhr.open("GET", reqEndpointTvMaze , true);
+xhr.send();
+
+}
+
+
