@@ -134,54 +134,55 @@ input:hover{
 <script>
 
 function searchMovies() {
-        var inputMovies = document.getElementById("inputMovies").value;
-        var endpoint = "https://api.tvmaze.com/search/shows";            
-        var reqEndpointTvMaze = endpoint + "?q=" + inputMovies;      
+          var inputMovies = document.getElementById("inputMovies").value;
+          var endpoint = "https://api.tvmaze.com/search/shows";            
+          var reqEndpointTvMaze = endpoint + "?q=" + inputMovies;      
 
                
-        var xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function() {
+          var xhr = new XMLHttpRequest();
+              xhr.onreadystatechange = function() {
 
-        if (this.readyState == 4 && this.status == 200) {
-            output = JSON.parse(this.responseText);
+     if (this.readyState == 4 && this.status == 200) {
+              output = JSON.parse(this.responseText);
 
-        var number_tv = output.length;
-        for (var i = 0; i < number_tv; i++) {
+          var number_tv = output.length;
+
+     for (var i = 0; i < number_tv; i++) {
 
             console.log(output[i]);  
 
-        var url = output[i]['show']['url']; 
-        var name = output[i]['show']['name'];
+          var url = output[i]['show']['url']; 
+          var name = output[i]['show']['name'];
    
 
-        var output_html  = "<div class = 'displayMovies'>"  + ">" + name + ">" + url +  "</div><br><br><br>";
+          var output_html  = "<div class = 'displayMovies'>"  + ">" + name + ">" + url +  "</div><br><br><br>";
 
-        var currentHTML = document.getElementById("responseSearch").innerHTML;
-            output_html = currentHTML + output_html;
-            document.getElementById("responseSearch").innerHTML = output_html;
+          var currentHTML = document.getElementById("responseSearch").innerHTML;
+              output_html = currentHTML + output_html;
+              document.getElementById("responseSearch").innerHTML = output_html;
 
 }
 }
 }; 
 
-             xhr.open("GET", reqEndpointTvMaze , true);
-             xhr.send();
+              xhr.open("GET", reqEndpointTvMaze , true);
+              xhr.send();
 }
-             var video = document.getElementById("myVideo");
-             var myBtn = document.getElementById("myBtn");
-             var btn = document.getElementById("btn");
+          var video = document.getElementById("myVideo");
+          var myBtn = document.getElementById("myBtn");
+          var btn = document.getElementById("btn");
 
 
 
 function myPlayPauseBtn() {
-          if (video.paused) {
+     if (video.paused) {
               video.play();
               myBtn.innerHTML = "Pause";
 
-           } else {
+    }else{
 
-               video.pause();
-               myBtn.innerHTML = "Play";
+             video.pause();
+             myBtn.innerHTML = "Play";
     }
 }
 
